@@ -1,10 +1,11 @@
 class MoviesController < ApplicationController
+  before_action :set_movie, only: [:show, :edit, :update, :destroy]
+
   def index
     @movies = Movie.all.order(:id)
   end
 
   def show
-    @movie = Movie.find(params[:id])
   end
 
   def create
@@ -19,25 +20,29 @@ class MoviesController < ApplicationController
   end
 
   def edit
-    @movie = Movie.find(params[:id])
   end
 
   def update
-    @movie = Movie.find(params[:id])
     @movie.update(movie_params)
 
     redirect_to @movie
   end
 
   def destroy
-    @movie = Movie.find(params[:id])
     @movie.destroy
 
     redirect_to movies_path
   end
 
   private
+  def set_movie
+    @movie = Movie.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:notice] = "Wrong movie id"
+    redirect_to movies_path
+  end
+
   def movie_params
-    params.require(:movie).permit(:title,:genre,:release_date,:runtime)
+    params.require(:movie).permit(:title,:genre,:release_date,:runtime,:img)
   end
 end

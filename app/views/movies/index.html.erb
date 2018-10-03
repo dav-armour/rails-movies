@@ -1,19 +1,26 @@
-<h1>Movies#index</h1>
+<h1 class="text-center">All Movies</h1>
 
-<%= link_to "New Movie", new_movie_path %>
+<div class="d-flex">
+  <%= link_to "New Movie", new_movie_path, class: "btn btn-primary mb-3 mx-auto" %>
+</div>
 
-<%# <ul> %>
+<div class="d-flex flex-wrap">
 <% @movies.each do |movie| %>
-  <h2><%= movie.title %></h2>
-  <p><%= movie.genre %></p>
-  <p><%= movie.runtime %></p>
-  <p><%= movie.release_date %></p>
-  <p>
-  <%= link_to "Edit", edit_movie_path(movie) %>
-  <%= link_to "Delete", movie_path(movie),
-                        method: :delete,
-                        data: { confirm: "Are you sure?" } %>
-  </p>
-  <br/>
+  <div class="card mx-1" style="width: 250px;">
+    <img class="card-img-top" src="<%= movie.img %>" alt="Poster of <%= movie.title %>">
+    <div class="card-body">
+      <h5 class="card-title"><%= movie.title %></h5>
+      <h6 class="card-subtitle mb-2"><%= movie.release_date.year %></h6>
+      <h6 class="card-subtitle mb-2 text-muted"><%= movie.genre %></h6>
+      <p class="card-text mb-0">Runtime: <%= movie.runtime %> minutes.</p>
+      <p class="card-text">Release Date: <%= movie.release_date.strftime("%d %B %Y") %></p>
+      <%= link_to "Show", movie_path(movie), class: "btn btn-primary" %>
+      <%= link_to "Edit", edit_movie_path(movie), class: "btn btn-secondary" %>
+      <%= link_to "Delete", movie_path(movie),
+                            method: :delete,
+                            data: { confirm: "Are you sure?" },
+                            class: "btn btn-danger" %>
+    </div>
+  </div>
 <% end %>
-<%# </ul> %>
+</div>
