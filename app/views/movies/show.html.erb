@@ -1,3 +1,18 @@
-<%= @movie.inspect %>
-
-<%= link_to "Movies", movies_path %>
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <img class="img-fluid" src="<%= @movie.img %>" alt="Poster of <%= @movie.title %>">
+    </div>
+    <div class="col-auto">
+      <h1 class="text-primary mx-auto">
+        <%= @movie.title %> <span class="text-muted">
+          (<%= @movie.release_date.year %>)
+        </span>
+      </h1>
+      <p>Genre: <%= @movie.genre %></p>
+      <p>Release Date: <%= @movie.release_date.strftime("%d %B %Y") %></p>
+      <p>Running Time: <%= @movie.runtime %> minutes</p>
+      <%= link_to "Return to Movies list", movies_path %>
+    </div>
+  </div>
+</div>
